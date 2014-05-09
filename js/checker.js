@@ -21,20 +21,29 @@ $.getJSON('http://jsbin.com/jaziroja/1', {}, function(data){
 // 設定 Facebook AppID
 window.fbAsyncInit = function(){
   FB.init({
-    appId: '259195264246285', // 若可以，請換成自己的 App ID !
+    appId: '704964376233215', // 若可以，請換成自己的 App ID !
     status: true
   });
 
   // 比對每個使用者的 group 是否有在 junkGroups 中出現
   //
   startButton.click(function(){
-    results.empty(); // 清除結果內容
-    $('.hw4-complete').remove(); // 移除「掃描完成」
-
-    // 1. 讓使用者登入此 Facebook App (FB.login)
+    console.log('Logged in!');
+  
     // 2. 以 FB.api 拿到使用者的 group 列表
-    // 拿到使用者 group 列表的 response 之後：
-    // results.after('<div class="hw4-complete alert alert-info">掃描完成</div>');
-
-  });
-};
+    FB.api('/me/groups', function(resp){
+      console.log('User groups:', resp.data);
+     // 拿到使用者 group 列表的 response 之後：
+     // results.after('<div class="hw4-complete alert alert-info">掃描完成</div>');
+     var i, group;
+     for(i=0; i<resp.data.length; i+=1){
+       group = resp.data[i];
+       if(junkGroups.indexOf(group.id) !== -1 ){
+         results.append('<tr><td>'+group.id+'</td><td>'+group.name+'</td></tr>');
+       }
+     }
+     // 拿到使用者 group 列表的 response 之後：
+     results.after('<div class="hw4-complete alert alert-info">掃描完成</div>');
+    });
+  },{scope: 'user_groups'});
+});
