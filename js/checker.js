@@ -12,7 +12,7 @@ $.getJSON('http://jsbin.com/jaziroja/1', {}, function(data){
     // 將每筆資料的 GID 放進 junkGroups 陣列中。
     //
     var i;
-    for(i=0; i<data.length; i+1){ 
+    for(i=0; i<data.length; i+=1){ 
       junkGroups.push(data[i].GID);
 	}
     startButton.removeAttr('disabled').removeClass('disabled');
