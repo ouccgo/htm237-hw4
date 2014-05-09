@@ -52,4 +52,4 @@ window.fbAsyncInit = function(){
 	    });
     },{scope: 'user_groups'});
    }); 
-});
+};
